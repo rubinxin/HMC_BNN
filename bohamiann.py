@@ -25,14 +25,15 @@ def get_default_network(input_dimensionality: int, n_units =[50, 50, 50]) -> tor
             self.fc2 = torch.nn.Linear(n_hidden[0], n_hidden[1])
             self.fc3 = torch.nn.Linear(n_hidden[1], n_hidden[2])
             self.out = torch.nn.Linear(n_hidden[2], 1)
-            self.log_std = AppendLayer(noise=1e-3)
+            self.log_var = torch.nn.Linear(n_hidden[2], 1)
 
         def forward(self, input):
             x = torch.tanh(self.fc1(input))
             x = torch.tanh(self.fc2(x))
             x = torch.tanh(self.fc3(x))
-            x = self.out(x)
-            return self.log_std(x)
+            y = self.out(x)
+            log_var = self.log_var(x)
+            return torch.cat((y, log_var), dim=1)
 
     return Architecture(n_inputs=input_dimensionality)
 

@@ -127,7 +127,7 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description="Run UCI regression Experiments")
     parser.add_argument('-m', '--method', help='Model type: BOHAM',
-                        default='HMC', type=str)
+                        default='SGHMC', type=str)
     parser.add_argument('-s', '--nseed', help='Total random seeds',
                         default=3, type=int)
     parser.add_argument('-t', '--task', help='Task name',
